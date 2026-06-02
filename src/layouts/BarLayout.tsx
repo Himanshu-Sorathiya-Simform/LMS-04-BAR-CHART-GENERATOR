@@ -3,7 +3,7 @@ import InputsContainer from "../components/InputsContainer.tsx";
 
 function BarLayout() {
 	return (
-		<div className="flex h-11/12 w-156 flex-col items-center gap-4 bg-gray-400">
+		<div className="flex h-3/4 w-200 flex-col items-center gap-4 rounded-md border border-gray-300 bg-gray-50 p-4">
 			<BarContainer />
 
 			<InputsContainer />
