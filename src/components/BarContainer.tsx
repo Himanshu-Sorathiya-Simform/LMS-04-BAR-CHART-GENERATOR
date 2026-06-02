@@ -1,7 +1,8 @@
+import { useRef } from "react";
 import Bar from "./Bar.tsx";
 
 function BarContainer() {
-	const totalHeight = 500;
+	const containerRef = useRef<HTMLDivElement>(null);
 
 	const data = [
 		{
@@ -10,7 +11,7 @@ function BarContainer() {
 		},
 		{
 			name: "B",
-			value: 180,
+			value: 170,
 		},
 		{
 			name: "C",
@@ -21,83 +22,72 @@ function BarContainer() {
 			value: 130,
 		},
 		{
-			name: "D",
-			value: 130,
+			name: "E",
+			value: 50,
+		},
+		{
+			name: "C",
+			value: 200,
 		},
 		{
 			name: "D",
 			value: 130,
 		},
 		{
-			name: "D",
-			value: 130,
+			name: "E",
+			value: 50,
+		},
+		{
+			name: "C",
+			value: 200,
 		},
 		{
 			name: "D",
 			value: 130,
 		},
 		{
-			name: "D",
-			value: 130,
+			name: "E",
+			value: 50,
+		},
+		{
+			name: "C",
+			value: 200,
 		},
 		{
 			name: "D",
 			value: 130,
 		},
 		{
-			name: "D",
-			value: 130,
+			name: "E",
+			value: 50,
+		},
+		{
+			name: "C",
+			value: 200,
 		},
 		{
 			name: "D",
 			value: 130,
 		},
 		{
-			name: "D",
-			value: 130,
-		},
-		{
-			name: "D",
-			value: 130,
-		},
-		{
-			name: "D",
-			value: 130,
-		},
-		{
-			name: "D",
-			value: 130,
-		},
-		{
-			name: "D",
-			value: 130,
-		},
-		{
-			name: "D",
-			value: 130,
-		},
-		{
-			name: "D",
-			value: 130,
-		},
-		{
-			name: "D",
-			value: 130,
-		},
-		{
-			name: "D",
-			value: 130,
+			name: "E",
+			value: 50,
 		},
 	];
 
+	const maximumPoint = Math.max(...data.map((p) => p.value));
+
 	return (
-		<div className="mx-auto grid w-full scrollbar-thin scrollbar-gutter-stable grid-cols-[auto_1fr] grid-rows-[auto_auto] gap-4 overflow-x-scroll">
+		<div
+			ref={containerRef}
+			className="mx-auto grid h-full scrollbar-thin grid-cols-[auto_1fr] grid-rows-[1fr_auto] gap-4 overflow-hidden"
+		>
 			<YAxis />
 
-			<div className="flex justify-center gap-8">
+			<div className="flex h-full scrollbar-thin scrollbar-gutter-stable gap-8 overflow-x-auto">
 				{data.map((point) => (
 					<Bar
-						totalHeight={totalHeight}
+						maximumPoint={maximumPoint}
 						name={point.name}
 						value={point.value}
 					/>
