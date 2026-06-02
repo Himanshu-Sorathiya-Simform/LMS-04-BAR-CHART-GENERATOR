@@ -1,5 +1,7 @@
+import AppLayout from "./layouts/AppLayout.tsx";
+
 function App() {
-	return null;
+	return <AppLayout />;
 }
 
 export default App;
