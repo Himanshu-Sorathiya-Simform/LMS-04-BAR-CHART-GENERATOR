@@ -3,7 +3,7 @@ import Input from "./ui/Input.tsx";
 
 function InputsContainer() {
 	return (
-		<div className="mt-auto flex w-2/3 flex-col gap-2">
+		<div className="flex w-2/3 flex-col gap-2">
 			<Input
 				name="new-entry-name"
 				label="New Entry Name: "
