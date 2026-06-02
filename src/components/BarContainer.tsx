@@ -1,100 +1,14 @@
-import { useRef, useState } from "react";
+import type { Data } from "../types/types.ts";
 import Bar from "./Bar.tsx";
 
-interface Data {
-	labelX: string;
-	labelY: string;
-	points: { name: string; value: number }[];
-}
-
-function BarContainer() {
-	const containerRef = useRef<HTMLDivElement>(null);
-
-	const [data, setData] = useState<Data>({
-		labelX: "Item",
-		labelY: "Price",
-		points: [
-			{
-				name: "A",
-				value: 150,
-			},
-			{
-				name: "B",
-				value: 170,
-			},
-			{
-				name: "C",
-				value: 200,
-			},
-			{
-				name: "D",
-				value: 130,
-			},
-			{
-				name: "E",
-				value: 50,
-			},
-			{
-				name: "C",
-				value: 200,
-			},
-			{
-				name: "D",
-				value: 130,
-			},
-			{
-				name: "E",
-				value: 50,
-			},
-			{
-				name: "C",
-				value: 200,
-			},
-			{
-				name: "D",
-				value: 130,
-			},
-			{
-				name: "E",
-				value: 50,
-			},
-			{
-				name: "C",
-				value: 200,
-			},
-			{
-				name: "D",
-				value: 130,
-			},
-			{
-				name: "E",
-				value: 50,
-			},
-			{
-				name: "C",
-				value: 200,
-			},
-			{
-				name: "D",
-				value: 130,
-			},
-			{
-				name: "E",
-				value: 50,
-			},
-		],
-	});
-
+function BarContainer({ data }: { data: Data }) {
 	const maximumPoint = Math.max(...data.points.map((p) => p.value));
 
 	return (
-		<div
-			ref={containerRef}
-			className="mx-auto grid h-full scrollbar-thin grid-cols-[auto_1fr] grid-rows-[1fr_auto] gap-4 overflow-hidden"
-		>
+		<div className="mx-auto grid h-full scrollbar-thin grid-cols-[auto_1fr] grid-rows-[1fr_auto] gap-4 overflow-hidden">
 			<YAxis labelY={data.labelY} />
 
-			<div className="flex h-full scrollbar-thin scrollbar-gutter-stable gap-8 overflow-x-auto">
+			<div className="flex h-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto">
 				{data.points.map((point) => (
 					<Bar
 						maximumPoint={maximumPoint}

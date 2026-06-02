@@ -6,15 +6,17 @@ interface BarProps {
 
 function Bar({ name, value, maximumPoint }: BarProps) {
 	return (
-		<div className="flex h-full flex-col items-center justify-between gap-2">
-			<span className="mt-auto text-sm text-gray-500">{value}</span>
+		<div className="flex h-full w-16 flex-col items-center justify-between gap-2">
+			<span className="mt-auto w-16 truncate text-center text-sm text-gray-500">
+				{value}
+			</span>
 
 			<div
-				className="max-w-16 min-w-8 rounded-t-lg bg-blue-500"
-				style={{ height: `${(value / maximumPoint) * 100}%` }}
+				className="w-10 rounded-t-lg bg-blue-500"
+				style={{ height: `${(value / maximumPoint) * 95}%` }}
 			></div>
 
-			<span>{name}</span>
+			<span className="w-16 truncate text-center">{name}</span>
 		</div>
 	);
 }
