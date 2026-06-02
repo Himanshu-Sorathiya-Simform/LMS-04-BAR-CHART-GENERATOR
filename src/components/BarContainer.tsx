@@ -20,13 +20,81 @@ function BarContainer() {
 			name: "D",
 			value: 130,
 		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
+		{
+			name: "D",
+			value: 130,
+		},
 	];
 
 	return (
-		<div className="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] gap-4">
+		<div className="mx-auto grid w-full scrollbar-thin scrollbar-gutter-stable grid-cols-[auto_1fr] grid-rows-[auto_auto] gap-4 overflow-x-scroll">
 			<YAxis />
 
-			<div className="flex gap-8">
+			<div className="flex justify-center gap-8">
 				{data.map((point) => (
 					<Bar
 						totalHeight={totalHeight}
@@ -45,7 +113,7 @@ function BarContainer() {
 
 function YAxis() {
 	return (
-		<div className="flex w-fit flex-col items-center gap-1">
+		<div className="flex w-fit flex-col items-center gap-1 text-nowrap">
 			<p className="h-full w-1 bg-gray-300"></p>
 			<span className="text-gray-500">Y-Axis</span>
 		</div>
