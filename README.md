@@ -1,2 +1,3 @@
 # LMS-04-BAR-CHART-GENERATOR
-An interactive Bar Chart Generator.
+
+A interactive bar chart generator.
