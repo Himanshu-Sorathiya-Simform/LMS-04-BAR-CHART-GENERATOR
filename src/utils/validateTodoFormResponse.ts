@@ -1,38 +1,58 @@
-import { v } from "@himanshu-sorathiya/omnival";
-
 function validate(fields: [string, string | boolean | number][]) {
 	for (const [field, value] of fields) {
 		switch (field) {
 			case "name": {
-				const ans = v
-					.string()
-					.minLength(1, "Name should have minimum length of 1")
-					.validate(value);
-
-				if (!ans.isValid) {
+				if (!value) {
 					return {
 						isValid: false,
-						error: ans.errors[0]?.message ?? "Invalid Value",
+						error: 'Enter value inside "name" field.',
 					};
 				}
 
-				return { isValid: true, error: "" };
+				if (typeof value !== "string") {
+					return {
+						isValid: false,
+						error: 'Enter string value in "name" field.',
+					};
+				}
+
+				if (value.length <= 1) {
+					return {
+						isValid: false,
+						error: "Name should have minimum length of 1.",
+					};
+				}
+
+				break;
 			}
 
 			case "value": {
-				const ans = v
-					.number()
-					.positive("Value must be positive.")
-					.validate(value);
-
-				if (!ans.isValid) {
+				if (!value) {
 					return {
 						isValid: false,
-						error: ans.errors[0]?.message ?? "Invalid Value",
+						error: 'Enter value inside "value" field.',
 					};
 				}
 
-				return { isValid: true, error: "" };
+				if (
+					typeof value !== "string"
+					|| Object.is(NaN, +value)
+					|| !Number.isFinite(+value)
+				) {
+					return {
+						isValid: false,
+						error: "Value must be a number.",
+					};
+				}
+
+				if (+value <= 0) {
+					return {
+						isValid: false,
+						error: "Value must be positive.",
+					};
+				}
+
+				break;
 			}
 
 			default:
@@ -43,10 +63,7 @@ function validate(fields: [string, string | boolean | number][]) {
 		}
 	}
 
-	return {
-		isValid: false,
-		error: `Unexpected Error`,
-	};
+	return { isValid: true, error: "" };
 }
 
 export { validate };

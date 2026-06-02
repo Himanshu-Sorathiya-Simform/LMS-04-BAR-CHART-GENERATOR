@@ -11,6 +11,7 @@ function BarContainer({ data }: { data: Data }) {
 			<div className="flex h-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto">
 				{data.points.map((point) => (
 					<Bar
+						key={point.name}
 						maximumPoint={maximumPoint}
 						name={point.name}
 						value={point.value}

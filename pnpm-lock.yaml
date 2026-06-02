@@ -9,7 +9,7 @@ importers:
         dependencies:
             "@tailwindcss/vite":
                 specifier: ^4.3.0
-                version: 4.3.0(vite@8.0.15(@types/node@24.12.4)(jiti@2.7.0))
+                version: 4.3.0(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0))
             react:
                 specifier: ^19.2.6
                 version: 19.2.6
@@ -23,9 +23,6 @@ importers:
             "@eslint/js":
                 specifier: ^10.0.1
                 version: 10.0.1(eslint@10.4.1(jiti@2.7.0))
-            "@himanshu-sorathiya/omnival":
-                specifier: ^1.4.1
-                version: 1.4.1
             "@types/node":
                 specifier: ^24.12.3
                 version: 24.12.4
@@ -37,7 +34,7 @@ importers:
                 version: 19.2.3(@types/react@19.2.15)
             "@vitejs/plugin-react":
                 specifier: ^6.0.1
-                version: 6.0.2(vite@8.0.15(@types/node@24.12.4)(jiti@2.7.0))
+                version: 6.0.2(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0))
             eslint:
                 specifier: ^10.3.0
                 version: 10.4.1(jiti@2.7.0)
@@ -64,7 +61,7 @@ importers:
                 version: 8.60.0(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
             vite:
                 specifier: ^8.0.12
-                version: 8.0.15(@types/node@24.12.4)(jiti@2.7.0)
+                version: 8.0.16(@types/node@24.12.4)(jiti@2.7.0)
 
 packages:
     "@babel/code-frame@7.29.7":
@@ -262,12 +259,6 @@ packages:
                 integrity: sha512-+CNAzxglkrpNf/kKywqQfk74QjtceuOE7Qm+AF8miRvPF/wmmK5+OJOgVh3AVTT3RP2mH3+FOaxlE5v72owk0A==,
             }
         engines: { node: ^20.19.0 || ^22.13.0 || >=24 }
-
-    "@himanshu-sorathiya/omnival@1.4.1":
-        resolution:
-            {
-                integrity: sha512-f7hSmfvUhF/Z/zgInjI/tQEBW2pQXKS067MTLqA8LAcJpLj/Ck7II8Oe+R/O036Damj7pwnD8J+oHi8a3DOFBw==,
-            }
 
     "@humanfs/core@0.19.2":
         resolution:
@@ -1648,10 +1639,10 @@ packages:
                 integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==,
             }
 
-    vite@8.0.15:
+    vite@8.0.16:
         resolution:
             {
-                integrity: sha512-qpgllRxrLqwsMAGRdLhsEr9bepaOQk1rxH1xT2coBXLaEB/bfkqQj1j7RMxwMfnYrvO1ZnFMiwX+wBVgnsyn0g==,
+                integrity: sha512-h9bXPmJichP5fLmVQo3PyaGSDE2n3aPuomeAlVRm0JLmt4rY6zmPKd59HYI4LNW8oTK7tlTsuC7l/m7awx9Jcw==,
             }
         engines: { node: ^20.19.0 || >=22.12.0 }
         hasBin: true
@@ -1888,8 +1879,6 @@ snapshots:
             "@eslint/core": 1.2.1
             levn: 0.4.1
 
-    "@himanshu-sorathiya/omnival@1.4.1": {}
-
     "@humanfs/core@0.19.2":
         dependencies:
             "@humanfs/types": 0.15.0
@@ -2046,12 +2035,12 @@ snapshots:
             "@tailwindcss/oxide-win32-arm64-msvc": 4.3.0
             "@tailwindcss/oxide-win32-x64-msvc": 4.3.0
 
-    "@tailwindcss/vite@4.3.0(vite@8.0.15(@types/node@24.12.4)(jiti@2.7.0))":
+    "@tailwindcss/vite@4.3.0(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0))":
         dependencies:
             "@tailwindcss/node": 4.3.0
             "@tailwindcss/oxide": 4.3.0
             tailwindcss: 4.3.0
-            vite: 8.0.15(@types/node@24.12.4)(jiti@2.7.0)
+            vite: 8.0.16(@types/node@24.12.4)(jiti@2.7.0)
 
     "@tybys/wasm-util@0.10.2":
         dependencies:
@@ -2167,10 +2156,10 @@ snapshots:
             "@typescript-eslint/types": 8.60.0
             eslint-visitor-keys: 5.0.1
 
-    "@vitejs/plugin-react@6.0.2(vite@8.0.15(@types/node@24.12.4)(jiti@2.7.0))":
+    "@vitejs/plugin-react@6.0.2(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0))":
         dependencies:
             "@rolldown/pluginutils": 1.0.1
-            vite: 8.0.15(@types/node@24.12.4)(jiti@2.7.0)
+            vite: 8.0.16(@types/node@24.12.4)(jiti@2.7.0)
 
     acorn-jsx@5.3.2(acorn@8.16.0):
         dependencies:
@@ -2596,7 +2585,7 @@ snapshots:
         dependencies:
             punycode: 2.3.1
 
-    vite@8.0.15(@types/node@24.12.4)(jiti@2.7.0):
+    vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0):
         dependencies:
             lightningcss: 1.32.0
             picomatch: 4.0.4

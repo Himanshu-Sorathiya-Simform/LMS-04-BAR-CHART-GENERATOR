@@ -22,7 +22,7 @@ function InputsContainer({
 
 		const { isValid, error } = validate([
 			["name", nameVal],
-			["value", +valueVal],
+			["value", valueVal],
 		]);
 
 		if (isValid === true) {
@@ -46,7 +46,7 @@ function InputsContainer({
 			onSubmit={handleFormSubmit}
 			className="flex w-2/3 flex-col gap-2"
 		>
-			<p className="text-red-600">{error}</p>
+			<p className="text-center text-red-600">{error}</p>
 
 			<Input
 				name="new-entry-name"
