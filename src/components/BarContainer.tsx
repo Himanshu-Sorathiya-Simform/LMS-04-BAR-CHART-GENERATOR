@@ -1,7 +1,9 @@
-import type { Data } from "../types/types.ts";
+import { useBar } from "../hooks/useBar.ts";
 import Bar from "./Bar.tsx";
 
-function BarContainer({ data }: { data: Data }) {
+function BarContainer() {
+	const { data } = useBar();
+
 	const maximumPoint = Math.max(...data.points.map((p) => p.value));
 
 	return (

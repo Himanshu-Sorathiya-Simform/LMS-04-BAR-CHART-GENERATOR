@@ -1,14 +1,12 @@
-import { type ActionDispatch, useState } from "react";
-import type { DataActionState } from "../reducer/dataReducer.ts";
+import { useState } from "react";
+import { useBar } from "../hooks/useBar.ts";
 import { validate } from "../utils/validateTodoFormResponse.ts";
 import Button from "./ui/Button.tsx";
 import Input from "./ui/Input.tsx";
 
-function InputsContainer({
-	handleCreate,
-}: {
-	handleCreate: ActionDispatch<[action: DataActionState]>;
-}) {
+function InputsContainer() {
+	const { dispatch } = useBar();
+
 	const [error, setError] = useState("");
 
 	function handleFormSubmit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -27,7 +25,7 @@ function InputsContainer({
 
 		if (isValid === true) {
 			setError("");
-			handleCreate({
+			dispatch({
 				type: "ADD_POINT",
 				payload: {
 					name: nameVal,
