@@ -23,6 +23,9 @@ importers:
             "@eslint/js":
                 specifier: ^10.0.1
                 version: 10.0.1(eslint@10.4.1(jiti@2.7.0))
+            "@himanshu-sorathiya/omnival":
+                specifier: ^1.4.4
+                version: 1.4.4
             "@types/node":
                 specifier: ^24.12.3
                 version: 24.12.4
@@ -259,6 +262,12 @@ packages:
                 integrity: sha512-+CNAzxglkrpNf/kKywqQfk74QjtceuOE7Qm+AF8miRvPF/wmmK5+OJOgVh3AVTT3RP2mH3+FOaxlE5v72owk0A==,
             }
         engines: { node: ^20.19.0 || ^22.13.0 || >=24 }
+
+    "@himanshu-sorathiya/omnival@1.4.4":
+        resolution:
+            {
+                integrity: sha512-rWWgHQGG9SzDNG8Qy6svt4Nh0T4DQNGTs7ZWp7g505+WOp/+llMgRSCPR4qkmrPWFylznAgjsILHvhg9Gcrpug==,
+            }
 
     "@humanfs/core@0.19.2":
         resolution:
@@ -1878,6 +1887,8 @@ snapshots:
         dependencies:
             "@eslint/core": 1.2.1
             levn: 0.4.1
+
+    "@himanshu-sorathiya/omnival@1.4.4": {}
 
     "@humanfs/core@0.19.2":
         dependencies:

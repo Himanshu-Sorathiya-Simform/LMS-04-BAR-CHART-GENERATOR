@@ -6,8 +6,8 @@ interface BarProps {
 
 function Bar({ name, value, maximumPoint }: BarProps) {
 	return (
-		<div className="flex h-full w-16 flex-col items-center justify-between gap-2">
-			<span className="mt-auto w-16 truncate text-center text-sm text-gray-500">
+		<button className="flex h-11/12 w-16 flex-col items-center justify-end gap-2 border-2 border-transparent focus:border-neutral-300 focus:outline-0">
+			<span className="w-16 truncate text-center text-sm text-gray-500">
 				{value}
 			</span>
 
@@ -17,7 +17,7 @@ function Bar({ name, value, maximumPoint }: BarProps) {
 			></div>
 
 			<span className="w-16 truncate text-center">{name}</span>
-		</div>
+		</button>
 	);
 }
 

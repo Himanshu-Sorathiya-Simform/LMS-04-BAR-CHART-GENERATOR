@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useBar } from "../hooks/useBar.ts";
-import { validate } from "../utils/validateTodoFormResponse.ts";
+import { validate } from "../utils/validateFormResponse.ts";
 import Button from "./ui/Button.tsx";
 import Input from "./ui/Input.tsx";
 
@@ -34,6 +34,9 @@ function InputsContainer() {
 			});
 
 			e.currentTarget.reset();
+			if (e.currentTarget.elements[0] instanceof HTMLInputElement) {
+				e.currentTarget.elements[0].focus();
+			}
 		} else {
 			setError(error);
 		}
@@ -53,6 +56,7 @@ function InputsContainer() {
 				autoFocus={true}
 				className="w-full rounded-md bg-neutral-50 px-3 py-1 text-neutral-800 outline-1 outline-neutral-400 placeholder:text-neutral-400 focus:outline-2 focus:outline-neutral-700 focus:placeholder:text-neutral-500"
 				containerClassName="flex text-nowrap gap-2  items-center"
+				required
 			/>
 
 			<Input
@@ -61,6 +65,7 @@ function InputsContainer() {
 				placeholder="Enter value of new entry on X axis..."
 				className="w-full rounded-md bg-neutral-50 px-3 py-1 text-neutral-800 outline-1 outline-neutral-400 placeholder:text-neutral-400 focus:outline-2 focus:outline-neutral-700 focus:placeholder:text-neutral-500"
 				containerClassName="flex text-nowrap gap-2  items-center"
+				required
 			/>
 
 			<Button className="self-center rounded-md bg-stone-300 px-8 py-2 text-sm outline-0 duration-75 hover:brightness-90 focus:brightness-90 focus-visible:outline-2 focus-visible:outline-stone-800">

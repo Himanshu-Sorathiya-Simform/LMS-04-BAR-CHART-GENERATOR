@@ -7,10 +7,10 @@ function BarContainer() {
 	const maximumPoint = Math.max(...data.points.map((p) => p.value));
 
 	return (
-		<div className="mx-auto grid h-full scrollbar-thin grid-cols-[auto_1fr] grid-rows-[1fr_auto] gap-4 overflow-hidden">
+		<div className="grid h-full w-full scrollbar-thin grid-cols-[auto_1fr] grid-rows-[1fr_auto] gap-4 overflow-hidden">
 			<YAxis labelY={data.labelY} />
 
-			<div className="flex h-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto">
+			<div className="flex h-full scrollbar-thin scrollbar-gutter-stable items-end gap-2 overflow-x-auto">
 				{data.points.map((point) => (
 					<Bar
 						key={point.name}
