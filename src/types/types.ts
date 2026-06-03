@@ -1,4 +1,5 @@
 interface Point {
+	id: number;
 	name: string;
 	value: number;
 }

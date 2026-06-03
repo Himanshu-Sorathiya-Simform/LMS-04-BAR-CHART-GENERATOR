@@ -5,14 +5,17 @@ const initialData: Data = {
 	labelY: "Price",
 	points: [
 		{
+			id: Date.now() - 1000,
 			name: "A",
 			value: 150,
 		},
 		{
+			id: Date.now() - 2000,
 			name: "B",
 			value: 170,
 		},
 		{
+			id: Date.now() - 3000,
 			name: "C",
 			value: 200,
 		},

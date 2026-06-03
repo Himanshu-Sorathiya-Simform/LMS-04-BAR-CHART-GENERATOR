@@ -1,12 +1,17 @@
+import type { Point } from "../types/types.ts";
+
 interface BarProps {
 	maximumPoint: number;
-	name: string;
-	value: number;
+	point: Point;
 }
 
-function Bar({ name, value, maximumPoint }: BarProps) {
+function Bar({ point: { name, value, id }, maximumPoint }: BarProps) {
 	return (
-		<button className="flex h-11/12 w-16 flex-col items-center justify-end gap-2 border-2 border-transparent focus:border-neutral-300 focus:outline-0">
+		<button
+			id={String(id)}
+			className="flex h-11/12 w-16 flex-col items-center justify-end gap-2 border-2 border-transparent focus:border-neutral-300 focus:outline-0"
+			data-id={String(id)}
+		>
 			<span className="w-16 truncate text-center text-sm text-gray-500">
 				{value}
 			</span>

@@ -28,6 +28,7 @@ function InputsContainer() {
 			dispatch({
 				type: "ADD_POINT",
 				payload: {
+					id: Date.now(),
 					name: nameVal,
 					value: +valueVal,
 				},
