@@ -1,37 +1,21 @@
 import { useRef } from "react";
 import { useBar } from "../hooks/useBar.ts";
+import type { Point } from "../types/types.ts";
 import Bar from "./Bar.tsx";
 import Tooltip from "./ui/Tooltip.tsx";
 
 function BarContainer() {
 	const { data } = useBar();
 	const tooltipRef = useRef<HTMLDivElement | null>(null);
+	const containerRef = useRef<HTMLDivElement | null>(null);
 	const barRef = useRef<HTMLButtonElement | null>(null);
 
-	function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+	function moveTooltip(point: Point, tooltipTop: number, tooltipLeft: number) {
 		if (!tooltipRef) return;
 
-		const bar = document
-			.elementFromPoint(e.clientX, e.clientY)
-			.closest("button");
-
-		if (!bar || bar === barRef.current) return;
-
-		barRef.current = bar;
 		tooltipRef.current.style.display = "grid";
-
-		const barRect = barRef.current.getBoundingClientRect();
-		const containerRect = e.currentTarget.getBoundingClientRect();
-
-		const tooltipTop = e.clientY - containerRect.top;
-		const tooltipLeft = barRect.left - containerRect.left + barRect.width / 2;
-
 		tooltipRef.current.style.top = `${tooltipTop}px`;
 		tooltipRef.current.style.left = `${tooltipLeft}px`;
-
-		const barId = bar.dataset.id;
-		const point = data.points.find((p) => String(p.id) === barId);
-
 		tooltipRef.current.innerHTML = "";
 		const fragment = document.createDocumentFragment();
 
@@ -52,15 +36,52 @@ function BarContainer() {
 		tooltipRef.current.append(fragment);
 	}
 
+	function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+		const bar = document
+			.elementFromPoint(e.clientX, e.clientY)
+			.closest("button");
+
+		if (!bar || bar === barRef.current) return;
+
+		barRef.current = bar;
+
+		const barRect = barRef.current.getBoundingClientRect();
+		const containerRect = containerRef.current.getBoundingClientRect();
+
+		const tooltipTop = e.clientY - containerRect.top;
+		const tooltipLeft = barRect.left - containerRect.left + barRect.width / 2;
+
+		const barId = bar.dataset.id;
+		const point = data.points.find((p) => String(p.id) === barId);
+
+		moveTooltip(point, tooltipTop, tooltipLeft);
+	}
+
 	function handleMouseLeave() {
 		tooltipRef.current.style.display = "none";
 		barRef.current = null;
+	}
+
+	function handleFocus(
+		e: React.FocusEvent<HTMLButtonElement, Element>,
+		point: Point,
+	) {
+		barRef.current = e.currentTarget;
+
+		const barRect = e.currentTarget.getBoundingClientRect();
+		const containerRect = containerRef.current.getBoundingClientRect();
+
+		const tooltipTop = barRect.top - containerRect.top;
+		const tooltipLeft = barRect.left - containerRect.left;
+
+		moveTooltip(point, tooltipTop, tooltipLeft);
 	}
 
 	const maximumPoint = Math.max(...data.points.map((p) => p.value));
 
 	return (
 		<div
+			ref={containerRef}
 			onMouseMove={handleMouseMove}
 			onMouseLeave={handleMouseLeave}
 			className="relative grid h-full w-full scrollbar-thin grid-cols-[auto_1fr] grid-rows-[1fr_auto] gap-4 overflow-hidden"
@@ -75,6 +96,7 @@ function BarContainer() {
 						key={point.id}
 						maximumPoint={maximumPoint}
 						point={point}
+						handleFocus={handleFocus}
 					/>
 				))}
 			</div>
