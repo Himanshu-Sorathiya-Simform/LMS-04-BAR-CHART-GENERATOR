@@ -126,7 +126,10 @@ function BarContainer() {
 		const barRect = e.currentTarget.firstElementChild.getBoundingClientRect();
 		const containerRect = containerRef.current.getBoundingClientRect();
 
-		const tooltipTop = barRect.top - containerRect.top + barRect.width / 2;
+		const tooltipTop =
+			containerRect.bottom - barRect.top - barRect.width / 2 > 100 ?
+				barRect.top - containerRect.top + barRect.width / 2
+			:	barRect.top - containerRect.top - 100 + barRect.width / 2;
 		const tooltipLeft = barRect.left - containerRect.left - barRect.width / 2;
 
 		moveTooltip(point, tooltipTop, tooltipLeft);
@@ -148,7 +151,7 @@ function BarContainer() {
 				maximumPoint={maximumPoint}
 			/>
 
-			<div className="relative flex h-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto py-6">
+			<div className="relative overflow-x-hidden">
 				<div className="absolute inset-0 flex flex-col justify-between py-6">
 					{Array.from({ length: 9 }).map((_, i) => (
 						<p
@@ -158,14 +161,16 @@ function BarContainer() {
 					))}
 				</div>
 
-				{data.points.map((point) => (
-					<Bar
-						key={point.id}
-						maximumPoint={maximumPoint}
-						point={point}
-						handleFocus={handleFocus}
-					/>
-				))}
+				<div className="flex h-full w-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto py-6">
+					{data.points.map((point) => (
+						<Bar
+							key={point.id}
+							maximumPoint={maximumPoint}
+							point={point}
+							handleFocus={handleFocus}
+						/>
+					))}
+				</div>
 			</div>
 
 			<span className="w-0"></span>
