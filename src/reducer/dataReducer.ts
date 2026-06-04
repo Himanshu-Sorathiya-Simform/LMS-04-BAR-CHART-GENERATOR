@@ -17,15 +17,27 @@ function dataReducer(data: Data, action: DataActionState) {
 		}
 
 		case "UPDATE_POINT": {
-			return data;
+			const { payload } = action;
+
+			if (!payload || typeof payload === "string") return data;
+
+			const index = data.points.findIndex((data) => data.id === payload.id);
+
+			const newPoints = [
+				...data.points.slice(0, index),
+				action.payload,
+				...data.points.slice(index + 1),
+			];
+
+			return { ...data, points: newPoints };
 		}
 
 		case "DELETE_POINT": {
-			if (typeof action.payload !== "string") return;
+			const { payload } = action;
 
-			const index = data.points.findIndex(
-				(point) => point.id === +action.payload,
-			);
+			if (typeof payload !== "string") return;
+
+			const index = data.points.findIndex((point) => point.id === +payload);
 
 			const newPoints = [
 				...data.points.slice(0, index),

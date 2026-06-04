@@ -17,6 +17,10 @@ function BarContainer() {
 		tooltipRef.current.style.display = "none";
 	}
 
+	function handleUpdate(point: Point) {
+		dispatch({ type: "UPDATE_POINT", payload: point });
+	}
+
 	function moveTooltip(point: Point, tooltipTop: number, tooltipLeft: number) {
 		if (!tooltipRef) return;
 
@@ -34,6 +38,8 @@ function BarContainer() {
 			keySpan.textContent = `${key[0].toUpperCase()}${key.slice(1)}:`;
 
 			const valInput = document.createElement("input");
+			valInput.setAttribute("name", key);
+			valInput.setAttribute("autocomplete", "true");
 			valInput.setAttribute(
 				"class",
 				"font-semibold text-sm w-full px-1 outline-2 focus:outline-2 outline-gray-300 focus:outline-gray-500 rounded-md",
@@ -67,6 +73,21 @@ function BarContainer() {
 		const bar = document
 			.elementFromPoint(e.clientX, e.clientY)
 			.closest("div[data-id]");
+
+		if (
+			bar !== barRef.current
+			&& barRef.current
+			&& tooltipRef.current.children[1] instanceof HTMLInputElement
+			&& tooltipRef.current.children[3] instanceof HTMLInputElement
+		) {
+			const newPointValues: Point = {
+				id: +barRef.current.dataset.id,
+				name: tooltipRef.current.children[1].value,
+				value: +tooltipRef.current.children[3].value,
+			};
+
+			handleUpdate(newPointValues);
+		}
 
 		if (!bar || !(bar instanceof HTMLDivElement) || bar === barRef.current)
 			return;
@@ -124,8 +145,11 @@ function BarContainer() {
 
 			<div className="relative flex h-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto py-6">
 				<div className="absolute inset-0 flex flex-col justify-between py-6">
-					{Array.from({ length: 9 }).map(() => (
-						<p className="h-px w-full bg-blue-200"></p>
+					{Array.from({ length: 9 }).map((_, i) => (
+						<p
+							key={i}
+							className="h-px w-full bg-blue-200"
+						></p>
 					))}
 				</div>
 
@@ -159,14 +183,22 @@ function YAxis({
 				{labelY
 					.split("")
 					.reverse()
-					.map((c) => (
-						<span className="-rotate-90">{c}</span>
+					.map((c, i) => (
+						<span
+							key={i}
+							className="-rotate-90"
+						>
+							{c}
+						</span>
 					))}
 			</div>
 
 			<div className="flex flex-col justify-between text-right">
 				{Array.from({ length: 8 }).map((_, i) => (
-					<span className="text-sm text-gray-400">
+					<span
+						key={i}
+						className="text-sm text-gray-400"
+					>
 						{(((8 - i) * maximumPoint) / 8).toFixed(2)}
 					</span>
 				))}
