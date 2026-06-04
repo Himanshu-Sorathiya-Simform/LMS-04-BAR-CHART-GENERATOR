@@ -88,9 +88,12 @@ function BarContainer() {
 		>
 			<Tooltip ref={tooltipRef} />
 
-			<YAxis labelY={data.labelY} />
+			<YAxis
+				labelY={data.labelY}
+				maximumPoint={maximumPoint}
+			/>
 
-			<div className="flex h-full scrollbar-thin scrollbar-gutter-stable items-end gap-2 overflow-x-auto">
+			<div className="flex h-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto py-6">
 				{data.points.map((point) => (
 					<Bar
 						key={point.id}
@@ -108,11 +111,34 @@ function BarContainer() {
 	);
 }
 
-function YAxis({ labelY = "Y-Axis" }: { labelY?: string }) {
+function YAxis({
+	labelY = "Y-Axis",
+	maximumPoint,
+}: {
+	labelY?: string;
+	maximumPoint: number;
+}) {
 	return (
-		<div className="flex w-fit flex-col items-center gap-1 text-nowrap">
+		<div className="flex h-full gap-1 py-6">
+			<div className="mr-1 flex flex-col self-center text-sm text-gray-500">
+				{labelY
+					.split("")
+					.reverse()
+					.map((c) => (
+						<span className="-rotate-90">{c}</span>
+					))}
+			</div>
+
+			<div className="flex flex-col justify-between">
+				{Array.from({ length: 8 }).map((_, i) => (
+					<span className="text-sm text-gray-400">
+						{Math.ceil(((8 - i) * maximumPoint) / 8)}
+					</span>
+				))}
+				<span className="text-sm text-gray-400">0</span>
+			</div>
+
 			<p className="h-full w-1 bg-gray-300"></p>
-			<span className="text-gray-500">{labelY}</span>
 		</div>
 	);
 }
