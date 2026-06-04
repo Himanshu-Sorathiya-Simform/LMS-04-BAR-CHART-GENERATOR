@@ -5,10 +5,17 @@ import Bar from "./Bar.tsx";
 import Tooltip from "./ui/Tooltip.tsx";
 
 function BarContainer() {
-	const { data } = useBar();
+	const { data, dispatch } = useBar();
 	const tooltipRef = useRef<HTMLDivElement | null>(null);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const barRef = useRef<HTMLDivElement | null>(null);
+
+	function handleDelete(id: string) {
+		dispatch({ type: "DELETE_POINT", payload: id });
+
+		barRef.current = null;
+		tooltipRef.current.style.display = "none";
+	}
 
 	function moveTooltip(point: Point, tooltipTop: number, tooltipLeft: number) {
 		if (!tooltipRef) return;
@@ -36,10 +43,6 @@ function BarContainer() {
 			fragment.append(keySpan, valInput);
 		}
 
-		const onClick = (event: MouseEvent) => {
-			console.log("Delete clicked!", event);
-		};
-
 		const svgNS = "http://www.w3.org/2000/svg";
 		const svgElement = document.createElementNS(svgNS, "svg");
 
@@ -47,7 +50,9 @@ function BarContainer() {
 			"class",
 			"h-7 w-7 stroke-1 rounded-md p-1 text-red-500 cursor-pointer hover:bg-red-100 transition",
 		);
-		svgElement.addEventListener("click", onClick);
+		svgElement.addEventListener("click", () => {
+			handleDelete(barRef.current.dataset.id);
+		});
 
 		const useElement = document.createElementNS(svgNS, "use");
 		useElement.setAttribute("href", "/icons/ui_icons_sprite.svg#delete");
@@ -101,7 +106,7 @@ function BarContainer() {
 		moveTooltip(point, tooltipTop, tooltipLeft);
 	}
 
-	const maximumPoint = Math.max(...data.points.map((p) => p.value));
+	const maximumPoint = Math.max(0, ...data.points.map((p) => p.value));
 
 	return (
 		<div
@@ -162,7 +167,7 @@ function YAxis({
 			<div className="flex flex-col justify-between text-right">
 				{Array.from({ length: 8 }).map((_, i) => (
 					<span className="text-sm text-gray-400">
-						{Math.ceil(((8 - i) * maximumPoint) / 8)}
+						{(((8 - i) * maximumPoint) / 8).toFixed(2)}
 					</span>
 				))}
 				<span className="text-sm text-gray-400">0</span>
