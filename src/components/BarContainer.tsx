@@ -84,7 +84,7 @@ function BarContainer() {
 			ref={containerRef}
 			onMouseMove={handleMouseMove}
 			onMouseLeave={handleMouseLeave}
-			className="relative grid h-full w-full scrollbar-thin grid-cols-[auto_1fr] grid-rows-[1fr_auto] gap-4 overflow-hidden"
+			className="relative grid h-full w-full scrollbar-thin grid-cols-[auto_1fr] grid-rows-[1fr_auto] overflow-hidden"
 		>
 			<Tooltip ref={tooltipRef} />
 
@@ -93,7 +93,13 @@ function BarContainer() {
 				maximumPoint={maximumPoint}
 			/>
 
-			<div className="flex h-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto py-6">
+			<div className="relative flex h-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto py-6">
+				<div className="absolute inset-0 flex flex-col justify-between py-6">
+					{Array.from({ length: 9 }).map(() => (
+						<p className="h-px w-full bg-blue-200"></p>
+					))}
+				</div>
+
 				{data.points.map((point) => (
 					<Bar
 						key={point.id}
@@ -129,7 +135,7 @@ function YAxis({
 					))}
 			</div>
 
-			<div className="flex flex-col justify-between">
+			<div className="flex flex-col justify-between text-right">
 				{Array.from({ length: 8 }).map((_, i) => (
 					<span className="text-sm text-gray-400">
 						{Math.ceil(((8 - i) * maximumPoint) / 8)}
