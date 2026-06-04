@@ -8,12 +8,13 @@ interface DataActionState {
 function dataReducer(data: Data, action: DataActionState) {
 	switch (action.type) {
 		case "ADD_POINT": {
-			const newPoints = {
-				...data,
-				points: [...data.points, action.payload],
-			};
+			const { payload } = action;
 
-			return newPoints;
+			if (!payload || typeof payload === "string") return;
+
+			const newPoints = [...data.points, payload];
+
+			return { ...data, points: newPoints };
 		}
 
 		case "UPDATE_POINT": {
@@ -25,7 +26,7 @@ function dataReducer(data: Data, action: DataActionState) {
 
 			const newPoints = [
 				...data.points.slice(0, index),
-				action.payload,
+				payload,
 				...data.points.slice(index + 1),
 			];
 

@@ -3,6 +3,8 @@ import { useBar } from "../hooks/useBar.ts";
 import type { Point } from "../types/types.ts";
 import Bar from "./Bar.tsx";
 import Tooltip from "./ui/Tooltip.tsx";
+import XAxis from "./ui/XAxis.tsx";
+import YAxis from "./ui/YAxis.tsx";
 
 function BarContainer() {
 	const { data, dispatch } = useBar();
@@ -166,55 +168,6 @@ function BarContainer() {
 			<span className="w-0"></span>
 
 			<XAxis labelX={data.labelX} />
-		</div>
-	);
-}
-
-function YAxis({
-	labelY = "Y-Axis",
-	maximumPoint,
-}: {
-	labelY?: string;
-	maximumPoint: number;
-}) {
-	return (
-		<div className="flex h-full gap-1 py-6">
-			<div className="mr-1 flex flex-col self-center text-sm text-gray-500">
-				{labelY
-					.split("")
-					.reverse()
-					.map((c, i) => (
-						<span
-							key={i}
-							className="-rotate-90"
-						>
-							{c}
-						</span>
-					))}
-			</div>
-
-			<div className="flex flex-col justify-between text-right">
-				{Array.from({ length: 8 }).map((_, i) => (
-					<span
-						key={i}
-						className="text-sm text-gray-400"
-					>
-						{(((8 - i) * maximumPoint) / 8).toFixed(2)}
-					</span>
-				))}
-				<span className="text-sm text-gray-400">0</span>
-			</div>
-
-			<p className="h-full w-1 bg-gray-300"></p>
-		</div>
-	);
-}
-
-function XAxis({ labelX = "X-Axis" }: { labelX?: string }) {
-	return (
-		<div className="flex items-center gap-1 text-nowrap">
-			<span className="text-gray-500">{labelX}</span>
-			<p className="h-1 w-full bg-gray-300"></p>
 		</div>
 	);
 }
