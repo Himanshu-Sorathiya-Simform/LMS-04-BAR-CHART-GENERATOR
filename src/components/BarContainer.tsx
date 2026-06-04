@@ -8,7 +8,7 @@ function BarContainer() {
 	const { data } = useBar();
 	const tooltipRef = useRef<HTMLDivElement | null>(null);
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const barRef = useRef<HTMLButtonElement | null>(null);
+	const barRef = useRef<HTMLDivElement | null>(null);
 
 	function moveTooltip(point: Point, tooltipTop: number, tooltipLeft: number) {
 		if (!tooltipRef) return;
@@ -39,9 +39,10 @@ function BarContainer() {
 	function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 		const bar = document
 			.elementFromPoint(e.clientX, e.clientY)
-			.closest("button");
+			.closest("div[data-id]");
 
-		if (!bar || bar === barRef.current) return;
+		if (!bar || !(bar instanceof HTMLDivElement) || bar === barRef.current)
+			return;
 
 		barRef.current = bar;
 
@@ -66,13 +67,14 @@ function BarContainer() {
 		e: React.FocusEvent<HTMLButtonElement, Element>,
 		point: Point,
 	) {
-		barRef.current = e.currentTarget;
+		if (e.currentTarget.firstElementChild instanceof HTMLDivElement)
+			barRef.current = e.currentTarget.firstElementChild;
 
-		const barRect = e.currentTarget.getBoundingClientRect();
+		const barRect = e.currentTarget.firstElementChild.getBoundingClientRect();
 		const containerRect = containerRef.current.getBoundingClientRect();
 
-		const tooltipTop = barRect.top - containerRect.top;
-		const tooltipLeft = barRect.left - containerRect.left;
+		const tooltipTop = barRect.top - containerRect.top + barRect.width / 2;
+		const tooltipLeft = barRect.left - containerRect.left - barRect.width / 2;
 
 		moveTooltip(point, tooltipTop, tooltipLeft);
 	}
