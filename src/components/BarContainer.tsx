@@ -99,7 +99,10 @@ function BarContainer() {
 		const barRect = barRef.current.getBoundingClientRect();
 		const containerRect = containerRef.current.getBoundingClientRect();
 
-		const tooltipTop = e.clientY - containerRect.top;
+		const tooltipTop =
+			containerRect.bottom - e.clientY > 100 ?
+				e.clientY - containerRect.top
+			:	e.clientY - containerRect.top - 100;
 		const tooltipLeft = barRect.left - containerRect.left + barRect.width / 2;
 
 		const barId = bar.dataset.id;
