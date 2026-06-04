@@ -26,12 +26,34 @@ function BarContainer() {
 			keySpan.classList.add("text-sm");
 			keySpan.textContent = `${key[0].toUpperCase()}${key.slice(1)}:`;
 
-			const valSpan = document.createElement("span");
-			valSpan.classList.add("font-semibold", "text-sm");
-			valSpan.textContent = point[key];
+			const valInput = document.createElement("input");
+			valInput.setAttribute(
+				"class",
+				"font-semibold text-sm w-full px-1 outline-2 focus:outline-2 outline-gray-300 focus:outline-gray-500 rounded-md",
+			);
+			valInput.value = point[key];
 
-			fragment.append(keySpan, valSpan);
+			fragment.append(keySpan, valInput);
 		}
+
+		const onClick = (event: MouseEvent) => {
+			console.log("Delete clicked!", event);
+		};
+
+		const svgNS = "http://www.w3.org/2000/svg";
+		const svgElement = document.createElementNS(svgNS, "svg");
+
+		svgElement.setAttribute(
+			"class",
+			"h-7 w-7 stroke-1 rounded-md p-1 text-red-500 cursor-pointer hover:bg-red-100 transition",
+		);
+		svgElement.addEventListener("click", onClick);
+
+		const useElement = document.createElementNS(svgNS, "use");
+		useElement.setAttribute("href", "/icons/ui_icons_sprite.svg#delete");
+
+		svgElement.appendChild(useElement);
+		fragment.append(svgElement);
 
 		tooltipRef.current.append(fragment);
 	}
