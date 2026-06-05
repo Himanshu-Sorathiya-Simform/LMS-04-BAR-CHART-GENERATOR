@@ -10,7 +10,7 @@ function dataReducer(data: Data, action: DataActionState) {
 		case "ADD_POINT": {
 			const { payload } = action;
 
-			if (!payload || typeof payload === "string") return;
+			if (!payload || typeof payload === "string") return data;
 
 			const newPoints = [...data.points, payload];
 
@@ -36,7 +36,7 @@ function dataReducer(data: Data, action: DataActionState) {
 		case "DELETE_POINT": {
 			const { payload } = action;
 
-			if (typeof payload !== "string") return;
+			if (typeof payload !== "string") return data;
 
 			const index = data.points.findIndex((point) => point.id === +payload);
 
