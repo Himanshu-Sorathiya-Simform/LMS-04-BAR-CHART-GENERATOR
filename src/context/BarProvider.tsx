@@ -2,11 +2,12 @@ import {
 	type ActionDispatch,
 	type ReactNode,
 	createContext,
+	useEffect,
 	useReducer,
 } from "react";
-import { initialData } from "../data.ts";
 import { type DataActionState, dataReducer } from "../reducer/dataReducer.ts";
 import type { Data } from "../types/types.ts";
+import { getLocalStorage, setLocalStorage } from "../utils/localStorage.ts";
 
 type BarContext = {
 	data: Data;
@@ -20,7 +21,13 @@ interface BarProviderProps {
 }
 
 function BarProvider({ children }: BarProviderProps) {
-	const [data, dispatch] = useReducer(dataReducer, initialData);
+	const [data, dispatch] = useReducer(dataReducer, "data", (key) =>
+		getLocalStorage<Data>(key),
+	);
+
+	useEffect(() => {
+		setLocalStorage("data", data);
+	}, [data]);
 
 	const contextValue = { data, dispatch };
 
