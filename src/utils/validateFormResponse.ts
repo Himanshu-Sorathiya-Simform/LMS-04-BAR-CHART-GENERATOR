@@ -1,6 +1,6 @@
 import { v } from "@himanshu-sorathiya/omnival";
 
-function validate(fields: [string, string | boolean | number][]) {
+function validate<T extends number | string | boolean>(fields: [string, T][]) {
 	for (const [field, value] of fields) {
 		switch (field) {
 			case "name": {
