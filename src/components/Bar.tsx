@@ -18,11 +18,11 @@ function Bar({ point: { name, value, id }, maximumPoint, onFocus }: BarProps) {
 				style={{ height: `${(value / maximumPoint) * 100}%` }}
 				data-id={String(id)}
 			>
-				<span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full truncate text-sm text-gray-500">
+				<span className="absolute top-0 left-1/2 w-14 -translate-x-1/2 -translate-y-full truncate text-sm text-gray-500">
 					{value}
 				</span>
 
-				<span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full truncate">
+				<span className="absolute bottom-0 left-1/2 w-14 -translate-x-1/2 translate-y-full truncate">
 					{name}
 				</span>
 			</div>

@@ -117,7 +117,11 @@ function BarContainer() {
 		>
 			{tooltip && (
 				<Tooltip
-					point={tooltip.point}
+					point={
+						data.points.find(
+							(p) => String(p.id) === String(tooltip.point.id),
+						) || tooltip.point
+					}
 					top={tooltip.top}
 					left={tooltip.left}
 					onUpdate={handleUpdate}

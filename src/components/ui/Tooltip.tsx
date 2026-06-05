@@ -32,7 +32,7 @@ function Tooltip({ point, top, left, onUpdate, onDelete }: TooltipProps) {
 			<span className="text-sm">Name:</span>
 			<input
 				type="text"
-				name={point.name}
+				name="name"
 				autoComplete="off"
 				className="w-full rounded-md px-1 text-sm font-semibold outline-2 outline-gray-300 focus:outline-2 focus:outline-gray-500"
 				value={point.name}
@@ -42,14 +42,14 @@ function Tooltip({ point, top, left, onUpdate, onDelete }: TooltipProps) {
 			<span className="text-sm">Value:</span>
 			<input
 				type="text"
-				name={point.name}
+				name="value"
 				autoComplete="off"
 				className="w-full rounded-md px-1 text-sm font-semibold outline-2 outline-gray-300 focus:outline-2 focus:outline-gray-500"
 				value={point.value}
 				onChange={handleChange}
 			/>
 
-			<div className="col-span-2 mt-1 flex justify-end border-t border-gray-100 pt-1">
+			<div className="col-span-2 mt-1 flex justify-start border-t border-gray-100 pt-1">
 				<Button
 					className="flex h-7 w-7 items-center justify-center rounded-md p-1 text-red-500 transition hover:bg-red-100"
 					onClick={() => onDelete(String(point.id))}
