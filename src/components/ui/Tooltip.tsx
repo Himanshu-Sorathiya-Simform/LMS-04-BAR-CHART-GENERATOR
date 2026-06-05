@@ -22,11 +22,12 @@ function Tooltip({ point, top, left, onUpdate, onDelete }: TooltipProps) {
 
 	return (
 		<div
+			id="tooltip"
 			style={{
 				top: `${top}px`,
 				left: `${left}px`,
 			}}
-			className="absolute z-10 grid w-64 grid-cols-[auto_1fr] items-center gap-2 rounded-md bg-white px-3 py-2 shadow-md transition-all duration-75"
+			className="absolute z-10 grid w-64 grid-cols-[auto_1fr] items-center gap-2 rounded-md bg-white px-3 py-2 shadow-md transition-all duration-150"
 		>
 			<span className="text-sm">Name:</span>
 			<input

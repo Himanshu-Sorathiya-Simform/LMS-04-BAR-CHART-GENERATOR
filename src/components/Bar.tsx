@@ -3,17 +3,14 @@ import type { Point } from "../types/types.ts";
 interface BarProps {
 	maximumPoint: number;
 	point: Point;
-	handleFocus: (
-		e: React.FocusEvent<HTMLButtonElement, Element>,
-		point: Point,
-	) => void;
+	onFocus: (e: React.FocusEvent<HTMLButtonElement, Element>, point: Point) => void;
 }
 
-function Bar({ point: { name, value, id }, maximumPoint, handleFocus }: BarProps) {
+function Bar({ point: { name, value, id }, maximumPoint, onFocus }: BarProps) {
 	return (
 		<button
 			className="flex h-full flex-col items-center justify-end border-2 border-transparent focus:border-neutral-300 focus:outline-0"
-			onFocus={(e) => handleFocus(e, { name, value, id })}
+			onFocus={(e) => onFocus(e, { name, value, id })}
 		>
 			<div
 				id={String(id)}

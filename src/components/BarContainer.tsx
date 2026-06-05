@@ -9,14 +9,14 @@ import YAxis from "./ui/YAxis.tsx";
 function BarContainer() {
 	const { data, dispatch } = useBar();
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const activeBarIdRef = useRef<string | null>(null);
+	const activeBarButtonRef = useRef<HTMLButtonElement | null>(null);
 
 	const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
 	function handleDelete(id: string) {
 		dispatch({ type: "DELETE_POINT", payload: id });
 
-		activeBarIdRef.current = null;
+		activeBarButtonRef.current = null;
 
 		setTooltip(null);
 	}
@@ -29,35 +29,40 @@ function BarContainer() {
 		if (!containerRef.current) return;
 
 		const target = e.target as HTMLElement;
-		const bar = target.closest("div[data-id]") as HTMLDivElement | null;
 
-		if (!bar) {
-			if (activeBarIdRef.current !== null) {
-				activeBarIdRef.current = null;
+		if (target.closest("#tooltip")) return;
+
+		const barButton = target.closest("button") as HTMLButtonElement | null;
+
+		if (!barButton) {
+			if (activeBarButtonRef.current !== null) {
+				activeBarButtonRef.current = null;
+
 				setTooltip(null);
 			}
 
 			return;
 		}
 
-		const barId = bar.dataset.id;
+		if (barButton === activeBarButtonRef.current) return;
 
-		if (barId === activeBarIdRef.current) return;
+		activeBarButtonRef.current = barButton;
 
-		activeBarIdRef.current = barId;
-
+		const innerDiv = barButton.firstElementChild as HTMLDivElement | null;
+		const barId = innerDiv?.dataset.id;
 		const point = data.points.find((p) => String(p.id) === barId);
 
 		if (!point) return;
 
-		const barRect = bar.getBoundingClientRect();
+		const barRect = barButton.getBoundingClientRect();
 		const containerRect = containerRef.current.getBoundingClientRect();
 
 		const tooltipTop =
 			containerRect.bottom - e.clientY > 100 ?
 				e.clientY - containerRect.top
 			:	e.clientY - containerRect.top - 100;
-		const tooltipLeft = barRect.left - containerRect.left + barRect.width / 2;
+		const tooltipLeft =
+			barRect.left - containerRect.left + (barRect.width * 2) / 3;
 
 		setTooltip({
 			point,
@@ -67,7 +72,7 @@ function BarContainer() {
 	}
 
 	function handleMouseLeave() {
-		activeBarIdRef.current = null;
+		activeBarButtonRef.current = null;
 
 		setTooltip(null);
 	}
@@ -78,11 +83,14 @@ function BarContainer() {
 	) {
 		if (!containerRef.current) return;
 
-		const bar = e.currentTarget.firstElementChild as HTMLDivElement | null;
+		const barButton = e.currentTarget;
+		const barInnerDiv = barButton.firstElementChild as HTMLDivElement | null;
 
-		if (!bar) return;
+		if (!barInnerDiv) return;
 
-		const barRect = bar.getBoundingClientRect();
+		activeBarButtonRef.current = barButton;
+
+		const barRect = barInnerDiv.getBoundingClientRect();
 		const containerRect = containerRef.current.getBoundingClientRect();
 
 		const tooltipTop =
@@ -91,7 +99,11 @@ function BarContainer() {
 			:	barRect.top - containerRect.top - 100 + barRect.width / 2;
 		const tooltipLeft = barRect.left - containerRect.left - barRect.width / 2;
 
-		setTooltip({ point, top: tooltipTop, left: tooltipLeft });
+		setTooltip({
+			point,
+			top: tooltipTop,
+			left: tooltipLeft,
+		});
 	}
 
 	const maximumPoint = Math.max(0, ...data.points.map((p) => p.value));
@@ -119,7 +131,7 @@ function BarContainer() {
 			/>
 
 			<div className="relative overflow-x-hidden">
-				<div className="absolute inset-0 flex flex-col justify-between py-6">
+				<div className="pointer-events-none absolute inset-0 flex flex-col justify-between py-6">
 					{Array.from({ length: 9 }).map((_, i) => (
 						<p
 							key={i}
@@ -128,13 +140,13 @@ function BarContainer() {
 					))}
 				</div>
 
-				<div className="flex h-full w-full scrollbar-thin scrollbar-gutter-stable overflow-x-auto py-6">
+				<div className="flex h-full w-full scrollbar-thin scrollbar-gutter-stable gap-0 overflow-x-auto py-6">
 					{data.points.map((point) => (
 						<Bar
 							key={point.id}
 							maximumPoint={maximumPoint}
 							point={point}
-							handleFocus={handleFocus}
+							onFocus={handleFocus}
 						/>
 					))}
 				</div>
