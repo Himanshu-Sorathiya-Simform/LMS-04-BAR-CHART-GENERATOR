@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { Point } from "../types/types.ts";
 
 interface BarProps {
@@ -6,7 +7,11 @@ interface BarProps {
 	onFocus: (e: React.FocusEvent<HTMLButtonElement, Element>, point: Point) => void;
 }
 
-function Bar({ point: { name, value, id }, maximumPoint, onFocus }: BarProps) {
+const Bar = memo(function Bar({
+	point: { name, value, id },
+	maximumPoint,
+	onFocus,
+}: BarProps) {
 	return (
 		<button
 			className="flex h-full flex-col items-center justify-end border-2 border-transparent focus:border-neutral-300 focus:outline-0"
@@ -28,6 +33,6 @@ function Bar({ point: { name, value, id }, maximumPoint, onFocus }: BarProps) {
 			</div>
 		</button>
 	);
-}
+});
 
 export default Bar;

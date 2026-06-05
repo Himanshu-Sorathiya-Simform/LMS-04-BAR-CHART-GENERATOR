@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useBar } from "../hooks/useBar.ts";
 import { validate } from "../utils/validateFormResponse.ts";
 import Button from "./ui/Button.tsx";
 import Input from "./ui/Input.tsx";
 
-function InputsContainer() {
+const InputsContainer = memo(function InputsContainer() {
 	const { dispatch } = useBar();
 
 	const [error, setError] = useState("");
@@ -74,6 +74,6 @@ function InputsContainer() {
 			</Button>
 		</form>
 	);
-}
+});
 
 export default InputsContainer;

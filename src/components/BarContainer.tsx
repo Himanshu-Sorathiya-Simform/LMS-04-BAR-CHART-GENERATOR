@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useBar } from "../hooks/useBar.ts";
 import type { Point, TooltipState } from "../types/types.ts";
 import Bar from "./Bar.tsx";
@@ -12,6 +12,8 @@ function BarContainer() {
 	const activeBarButtonRef = useRef<HTMLButtonElement | null>(null);
 
 	const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+
+	const memoizedData = useMemo(() => data, [data]);
 
 	function handleDelete(id: string) {
 		dispatch({ type: "DELETE_POINT", payload: id });
@@ -77,7 +79,7 @@ function BarContainer() {
 		setTooltip(null);
 	}
 
-	function handleFocus(
+	const handleFocus = useCallback(function handleFocus(
 		e: React.FocusEvent<HTMLButtonElement, Element>,
 		point: Point,
 	) {
@@ -104,9 +106,9 @@ function BarContainer() {
 			top: tooltipTop,
 			left: tooltipLeft,
 		});
-	}
+	}, []);
 
-	const maximumPoint = Math.max(0, ...data.points.map((p) => p.value));
+	const maximumPoint = Math.max(0, ...memoizedData.points.map((p) => p.value));
 
 	return (
 		<div
@@ -118,7 +120,7 @@ function BarContainer() {
 			{tooltip && (
 				<Tooltip
 					point={
-						data.points.find(
+						memoizedData.points.find(
 							(p) => String(p.id) === String(tooltip.point.id),
 						) || tooltip.point
 					}
@@ -130,7 +132,7 @@ function BarContainer() {
 			)}
 
 			<YAxis
-				labelY={data.labelY}
+				labelY={memoizedData.labelY}
 				maximumPoint={maximumPoint}
 			/>
 
@@ -145,7 +147,7 @@ function BarContainer() {
 				</div>
 
 				<div className="flex h-full w-full scrollbar-thin scrollbar-gutter-stable gap-0 overflow-x-auto py-6">
-					{data.points.map((point) => (
+					{memoizedData.points.map((point) => (
 						<Bar
 							key={point.id}
 							maximumPoint={maximumPoint}
@@ -158,7 +160,7 @@ function BarContainer() {
 
 			<span className="w-0"></span>
 
-			<XAxis labelX={data.labelX} />
+			<XAxis labelX={memoizedData.labelX} />
 		</div>
 	);
 }

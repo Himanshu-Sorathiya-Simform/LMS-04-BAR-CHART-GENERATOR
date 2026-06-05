@@ -1,10 +1,11 @@
-function YAxis({
-	labelY = "Y-Axis",
-	maximumPoint,
-}: {
+import { memo } from "react";
+
+interface YAxisProps {
 	labelY?: string;
 	maximumPoint: number;
-}) {
+}
+
+const YAxis = memo(function YAxis({ labelY = "Y-Axis", maximumPoint }: YAxisProps) {
 	return (
 		<div className="flex h-full gap-1 py-6">
 			<div className="mr-1 flex flex-col self-center text-sm text-gray-500">
@@ -36,6 +37,5 @@ function YAxis({
 			<p className="h-full w-1 bg-gray-300"></p>
 		</div>
 	);
-}
-
+});
 export default YAxis;
