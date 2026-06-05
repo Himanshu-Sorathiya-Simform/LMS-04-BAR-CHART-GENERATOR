@@ -17,7 +17,7 @@ function Bar({ point: { name, value, id }, maximumPoint, handleFocus }: BarProps
 		>
 			<div
 				id={String(id)}
-				className="relative mx-3 w-10 rounded-t-lg bg-blue-500 transition-all"
+				className="relative mx-3 w-12 rounded-t-lg bg-blue-500 transition-all"
 				style={{ height: `${(value / maximumPoint) * 100}%` }}
 				data-id={String(id)}
 			>

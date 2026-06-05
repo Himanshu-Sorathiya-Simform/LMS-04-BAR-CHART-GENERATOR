@@ -10,4 +10,10 @@ interface Data {
 	points: Point[];
 }
 
-export type { Data, Point };
+interface TooltipState {
+	point: Point;
+	top: number;
+	left: number;
+}
+
+export type { Data, Point, TooltipState };

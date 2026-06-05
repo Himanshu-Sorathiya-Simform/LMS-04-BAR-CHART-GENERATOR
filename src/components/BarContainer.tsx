@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useBar } from "../hooks/useBar.ts";
-import type { Point } from "../types/types.ts";
+import type { Point, TooltipState } from "../types/types.ts";
 import Bar from "./Bar.tsx";
 import Tooltip from "./ui/Tooltip.tsx";
 import XAxis from "./ui/XAxis.tsx";
@@ -8,95 +8,49 @@ import YAxis from "./ui/YAxis.tsx";
 
 function BarContainer() {
 	const { data, dispatch } = useBar();
-	const tooltipRef = useRef<HTMLDivElement | null>(null);
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const barRef = useRef<HTMLDivElement | null>(null);
+	const activeBarIdRef = useRef<string | null>(null);
+
+	const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
 	function handleDelete(id: string) {
 		dispatch({ type: "DELETE_POINT", payload: id });
 
-		barRef.current = null;
-		tooltipRef.current.style.display = "none";
+		activeBarIdRef.current = null;
+
+		setTooltip(null);
 	}
 
 	function handleUpdate(point: Point) {
 		dispatch({ type: "UPDATE_POINT", payload: point });
 	}
 
-	function moveTooltip(point: Point, tooltipTop: number, tooltipLeft: number) {
-		if (!tooltipRef) return;
-
-		tooltipRef.current.style.display = "grid";
-		tooltipRef.current.style.top = `${tooltipTop}px`;
-		tooltipRef.current.style.left = `${tooltipLeft}px`;
-		tooltipRef.current.innerHTML = "";
-		const fragment = document.createDocumentFragment();
-
-		for (const key of Object.keys(point)) {
-			if (key === "id") continue;
-
-			const keySpan = document.createElement("span");
-			keySpan.classList.add("text-sm");
-			keySpan.textContent = `${key[0].toUpperCase()}${key.slice(1)}:`;
-
-			const valInput = document.createElement("input");
-			valInput.setAttribute("name", key);
-			valInput.setAttribute("autocomplete", "true");
-			valInput.setAttribute(
-				"class",
-				"font-semibold text-sm w-full px-1 outline-2 focus:outline-2 outline-gray-300 focus:outline-gray-500 rounded-md",
-			);
-			valInput.value = point[key];
-
-			fragment.append(keySpan, valInput);
-		}
-
-		const svgNS = "http://www.w3.org/2000/svg";
-		const svgElement = document.createElementNS(svgNS, "svg");
-
-		svgElement.setAttribute(
-			"class",
-			"h-7 w-7 stroke-1 rounded-md p-1 text-red-500 cursor-pointer hover:bg-red-100 transition",
-		);
-		svgElement.addEventListener("click", () => {
-			handleDelete(barRef.current.dataset.id);
-		});
-
-		const useElement = document.createElementNS(svgNS, "use");
-		useElement.setAttribute("href", "/icons/ui_icons_sprite.svg#delete");
-
-		svgElement.appendChild(useElement);
-		fragment.append(svgElement);
-
-		tooltipRef.current.append(fragment);
-	}
-
 	function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-		const bar = document
-			.elementFromPoint(e.clientX, e.clientY)
-			.closest("div[data-id]");
+		if (!containerRef.current) return;
 
-		if (
-			bar !== barRef.current
-			&& barRef.current
-			&& tooltipRef.current.children[1] instanceof HTMLInputElement
-			&& tooltipRef.current.children[3] instanceof HTMLInputElement
-		) {
-			const newPointValues: Point = {
-				id: +barRef.current.dataset.id,
-				name: tooltipRef.current.children[1].value,
-				value: +tooltipRef.current.children[3].value,
-			};
+		const target = e.target as HTMLElement;
+		const bar = target.closest("div[data-id]") as HTMLDivElement | null;
 
-			handleUpdate(newPointValues);
+		if (!bar) {
+			if (activeBarIdRef.current !== null) {
+				activeBarIdRef.current = null;
+				setTooltip(null);
+			}
+
+			return;
 		}
 
-		if (!bar || !(bar instanceof HTMLDivElement) || bar === barRef.current)
-			return;
+		const barId = bar.dataset.id;
 
-		barRef.current = bar;
+		if (barId === activeBarIdRef.current) return;
 
-		const barRect = barRef.current.getBoundingClientRect();
+		activeBarIdRef.current = barId;
+
+		const point = data.points.find((p) => String(p.id) === barId);
+
+		if (!point) return;
+
+		const barRect = bar.getBoundingClientRect();
 		const containerRect = containerRef.current.getBoundingClientRect();
 
 		const tooltipTop =
@@ -105,25 +59,30 @@ function BarContainer() {
 			:	e.clientY - containerRect.top - 100;
 		const tooltipLeft = barRect.left - containerRect.left + barRect.width / 2;
 
-		const barId = bar.dataset.id;
-		const point = data.points.find((p) => String(p.id) === barId);
-
-		moveTooltip(point, tooltipTop, tooltipLeft);
+		setTooltip({
+			point,
+			top: tooltipTop,
+			left: tooltipLeft,
+		});
 	}
 
 	function handleMouseLeave() {
-		tooltipRef.current.style.display = "none";
-		barRef.current = null;
+		activeBarIdRef.current = null;
+
+		setTooltip(null);
 	}
 
 	function handleFocus(
 		e: React.FocusEvent<HTMLButtonElement, Element>,
 		point: Point,
 	) {
-		if (e.currentTarget.firstElementChild instanceof HTMLDivElement)
-			barRef.current = e.currentTarget.firstElementChild;
+		if (!containerRef.current) return;
 
-		const barRect = e.currentTarget.firstElementChild.getBoundingClientRect();
+		const bar = e.currentTarget.firstElementChild as HTMLDivElement | null;
+
+		if (!bar) return;
+
+		const barRect = bar.getBoundingClientRect();
 		const containerRect = containerRef.current.getBoundingClientRect();
 
 		const tooltipTop =
@@ -132,7 +91,7 @@ function BarContainer() {
 			:	barRect.top - containerRect.top - 100 + barRect.width / 2;
 		const tooltipLeft = barRect.left - containerRect.left - barRect.width / 2;
 
-		moveTooltip(point, tooltipTop, tooltipLeft);
+		setTooltip({ point, top: tooltipTop, left: tooltipLeft });
 	}
 
 	const maximumPoint = Math.max(0, ...data.points.map((p) => p.value));
@@ -144,7 +103,15 @@ function BarContainer() {
 			onMouseLeave={handleMouseLeave}
 			className="relative grid h-full w-full scrollbar-thin grid-cols-[auto_1fr] grid-rows-[1fr_auto] overflow-hidden"
 		>
-			<Tooltip ref={tooltipRef} />
+			{tooltip && (
+				<Tooltip
+					point={tooltip.point}
+					top={tooltip.top}
+					left={tooltip.left}
+					onUpdate={handleUpdate}
+					onDelete={handleDelete}
+				/>
+			)}
 
 			<YAxis
 				labelY={data.labelY}
@@ -161,7 +128,7 @@ function BarContainer() {
 					))}
 				</div>
 
-				<div className="flex h-full w-full scrollbar-thin scrollbar-gutter-stable gap-2 overflow-x-auto py-6">
+				<div className="flex h-full w-full scrollbar-thin scrollbar-gutter-stable overflow-x-auto py-6">
 					{data.points.map((point) => (
 						<Bar
 							key={point.id}
