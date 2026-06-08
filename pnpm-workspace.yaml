@@ -1,2 +1,3 @@
 minimumReleaseAgeExclude:
     - "@himanshu-sorathiya/omnival@1.4.4"
+    - "@himanshu-sorathiya/react-kit@1.0.1"

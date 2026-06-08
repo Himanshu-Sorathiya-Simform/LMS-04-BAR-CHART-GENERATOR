@@ -7,6 +7,9 @@ settings:
 importers:
     .:
         dependencies:
+            "@himanshu-sorathiya/react-kit":
+                specifier: ^1.0.1
+                version: 1.0.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
             "@tailwindcss/vite":
                 specifier: ^4.3.0
                 version: 4.3.0(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0))
@@ -268,6 +271,15 @@ packages:
             {
                 integrity: sha512-rWWgHQGG9SzDNG8Qy6svt4Nh0T4DQNGTs7ZWp7g505+WOp/+llMgRSCPR4qkmrPWFylznAgjsILHvhg9Gcrpug==,
             }
+
+    "@himanshu-sorathiya/react-kit@1.0.1":
+        resolution:
+            {
+                integrity: sha512-dy7HpMKQbS9sdnR24uQ7EwTFuVLqow1shOX9HTDEOuHmHRMb6eBA+vj/z0LZkcuui9u00uRpqcMYYfvfasT4mg==,
+            }
+        peerDependencies:
+            react: ^17.0.0 || ^18.0.0 || ^19.0.0
+            react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
 
     "@humanfs/core@0.19.2":
         resolution:
@@ -634,6 +646,21 @@ packages:
             }
         peerDependencies:
             vite: ^5.2.0 || ^6 || ^7 || ^8
+
+    "@tanstack/react-store@0.11.0":
+        resolution:
+            {
+                integrity: sha512-tX4YXh3PDkmpvGQWkWqKpzs/MSqbtuwY9dWdWhtV9Q50PmO+jOkUKIWIX4G85dwt7lxdHLXsiaEKPdKmC8F41w==,
+            }
+        peerDependencies:
+            react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+            react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+    "@tanstack/store@0.11.0":
+        resolution:
+            {
+                integrity: sha512-WlzzCt3xi0G6pCAJu1U+2jiECwabETDpQDi3hfkFZvJii9AuZqEKbOiVarX1/bWhTNjU486yQtJCCasi/0q+Cw==,
+            }
 
     "@tybys/wasm-util@0.10.2":
         resolution:
@@ -1648,6 +1675,14 @@ packages:
                 integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==,
             }
 
+    use-sync-external-store@1.6.0:
+        resolution:
+            {
+                integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==,
+            }
+        peerDependencies:
+            react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
     vite@8.0.16:
         resolution:
             {
@@ -1890,6 +1925,12 @@ snapshots:
 
     "@himanshu-sorathiya/omnival@1.4.4": {}
 
+    "@himanshu-sorathiya/react-kit@1.0.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)":
+        dependencies:
+            "@tanstack/react-store": 0.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+            react: 19.2.6
+            react-dom: 19.2.6(react@19.2.6)
+
     "@humanfs/core@0.19.2":
         dependencies:
             "@humanfs/types": 0.15.0
@@ -2052,6 +2093,15 @@ snapshots:
             "@tailwindcss/oxide": 4.3.0
             tailwindcss: 4.3.0
             vite: 8.0.16(@types/node@24.12.4)(jiti@2.7.0)
+
+    "@tanstack/react-store@0.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)":
+        dependencies:
+            "@tanstack/store": 0.11.0
+            react: 19.2.6
+            react-dom: 19.2.6(react@19.2.6)
+            use-sync-external-store: 1.6.0(react@19.2.6)
+
+    "@tanstack/store@0.11.0": {}
 
     "@tybys/wasm-util@0.10.2":
         dependencies:
@@ -2595,6 +2645,10 @@ snapshots:
     uri-js@4.4.1:
         dependencies:
             punycode: 2.3.1
+
+    use-sync-external-store@1.6.0(react@19.2.6):
+        dependencies:
+            react: 19.2.6
 
     vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0):
         dependencies:

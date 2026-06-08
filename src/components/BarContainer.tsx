@@ -7,23 +7,23 @@ import XAxis from "./ui/XAxis.tsx";
 import YAxis from "./ui/YAxis.tsx";
 
 function BarContainer() {
-	const { data, dispatch } = useBar();
+	const { data } = useBar();
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const activeBarButtonRef = useRef<HTMLButtonElement | null>(null);
 
 	const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
-	function handleDelete(id: string) {
-		dispatch({ type: "DELETE_POINT", payload: id });
+	// function handleDelete(id: string) {
+	// 	dispatch({ type: "DELETE_POINT", payload: id });
 
-		activeBarButtonRef.current = null;
+	// 	activeBarButtonRef.current = null;
 
-		setTooltip(null);
-	}
+	// 	setTooltip(null);
+	// }
 
-	function handleUpdate(point: Point) {
-		dispatch({ type: "UPDATE_POINT", payload: point });
-	}
+	// function handleUpdate(point: Point) {
+	// 	dispatch({ type: "UPDATE_POINT", payload: point });
+	// }
 
 	function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 		if (!containerRef.current) return;
@@ -129,8 +129,6 @@ function BarContainer() {
 					}
 					top={tooltip.top}
 					left={tooltip.left}
-					onUpdate={handleUpdate}
-					onDelete={handleDelete}
 				/>
 			)}
 
