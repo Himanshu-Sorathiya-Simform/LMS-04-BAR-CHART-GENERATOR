@@ -46,6 +46,8 @@ function BarContainer() {
 
 		if (barButton === activeBarButtonRef.current) return;
 
+		const barHeight = barButton.firstElementChild.getBoundingClientRect().height;
+
 		activeBarButtonRef.current = barButton;
 
 		const innerDiv = barButton.firstElementChild as HTMLDivElement | null;
@@ -54,15 +56,18 @@ function BarContainer() {
 
 		if (!point) return;
 
-		const barRect = barButton.getBoundingClientRect();
+		const barButtonRect = barButton.getBoundingClientRect();
 		const containerRect = containerRef.current.getBoundingClientRect();
 
 		const tooltipTop =
 			containerRect.bottom - e.clientY > 100 ?
-				e.clientY - containerRect.top
+				Math.max(
+					e.clientY - containerRect.top,
+					barButtonRect.height - barHeight,
+				)
 			:	e.clientY - containerRect.top - 100;
 		const tooltipLeft =
-			barRect.left - containerRect.left + (barRect.width * 2) / 3;
+			barButtonRect.left - containerRect.left + (barButtonRect.width * 2) / 3;
 
 		setTooltip({
 			point,
