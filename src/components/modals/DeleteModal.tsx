@@ -23,7 +23,7 @@ function DeleteModal({ bar }: DeleteModalProps) {
 	}
 
 	return (
-		<div className="m-auto flex flex-col gap-7">
+		<div className="relative flex flex-col gap-7">
 			<p className="text-xl">Delete "{bar.name}"?</p>
 
 			<p>Please confirm deletion of {bar.name}.</p>

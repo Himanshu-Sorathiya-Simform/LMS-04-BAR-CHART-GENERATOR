@@ -13,26 +13,6 @@ interface TooltipProps {
 function Tooltip({ point, top, left }: TooltipProps) {
 	const { openModal } = useModal();
 
-	// const [error, setError] = useState("");
-
-	// function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-	// 	const { name, value } = e.target;
-
-	// 	const field: [string, string | number | boolean][] = [[name, value]];
-
-	// 	const { isValid, error } = validate(field);
-
-	// 	if (isValid === true) {
-	// 		setError("");
-	// 		onUpdate({
-	// 			...point,
-	// 			[name]: name === "value" ? Number(value) : value,
-	// 		});
-	// 	} else {
-	// 		setError(error);
-	// 	}
-	// }
-
 	return (
 		<div
 			id="tooltip"

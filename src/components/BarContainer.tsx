@@ -13,18 +13,6 @@ function BarContainer() {
 
 	const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
-	// function handleDelete(id: string) {
-	// 	dispatch({ type: "DELETE_POINT", payload: id });
-
-	// 	activeBarButtonRef.current = null;
-
-	// 	setTooltip(null);
-	// }
-
-	// function handleUpdate(point: Point) {
-	// 	dispatch({ type: "UPDATE_POINT", payload: point });
-	// }
-
 	function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 		if (!containerRef.current) return;
 
@@ -147,7 +135,7 @@ function BarContainer() {
 					))}
 				</div>
 
-				<div className="flex h-full w-full scrollbar-thin scrollbar-gutter-stable gap-0 overflow-x-auto py-6">
+				<div className="flex h-full w-full scrollbar-thin scrollbar-gutter-stable gap-0 overflow-x-auto px-2 py-6">
 					{data.points.map((point) => (
 						<Bar
 							key={point.id}

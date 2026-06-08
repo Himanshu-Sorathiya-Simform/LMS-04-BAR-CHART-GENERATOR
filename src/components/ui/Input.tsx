@@ -17,6 +17,7 @@ function Input({
 			{label && <label htmlFor={props.id}>{label}</label>}
 
 			<input
+				type="text"
 				{...props}
 				name={name}
 				className={`transition ${props.className}`}

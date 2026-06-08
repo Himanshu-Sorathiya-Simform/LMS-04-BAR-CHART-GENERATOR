@@ -14,7 +14,7 @@ const Bar = memo(function Bar({
 }: BarProps) {
 	return (
 		<button
-			className="flex h-full flex-col items-center justify-end border-2 border-transparent focus:border-neutral-300 focus:outline-0"
+			className="flex h-full flex-col items-center justify-end border-2 border-transparent transition hover:bg-blue-100 focus:border-neutral-300 focus:outline-0"
 			onFocus={(e) => onFocus(e, { name, value, id })}
 		>
 			<div
