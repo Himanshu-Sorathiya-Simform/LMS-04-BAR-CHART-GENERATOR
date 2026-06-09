@@ -1,8 +1,8 @@
-import type { Data } from "./types/types.ts";
+import type { Data } from "../types/types.ts";
 
 const initialData: Data = {
-	labelX: "Item",
-	labelY: "Price",
+	labelX: "X-Axis",
+	labelY: "Y-Axis",
 	points: [
 		{
 			id: Date.now() - 1000,
