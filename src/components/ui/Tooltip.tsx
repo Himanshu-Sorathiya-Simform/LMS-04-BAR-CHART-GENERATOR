@@ -20,17 +20,17 @@ function Tooltip({ point, top, left }: TooltipProps) {
 				top: `${top}px`,
 				left: `${left}px`,
 			}}
-			className="absolute z-10 w-64 rounded-md bg-white px-3 py-2 shadow-md transition-all duration-150"
+			className="absolute z-10 max-w-60 min-w-40 rounded-md bg-white px-3 py-2 shadow-md transition-all duration-150"
 		>
 			<div className="grid grid-cols-[auto_1fr] items-center gap-2">
 				<span className="text-sm">Name:</span>
-				<span className="text-sm font-semibold">{point.name}</span>
+				<span className="truncate text-sm font-semibold">{point.name}</span>
 
 				<span className="text-sm">Value:</span>
 				<span className="text-sm font-semibold">{point.value}</span>
 			</div>
 
-			<div className="col-span-2 mt-1 flex justify-start border-t border-gray-100 pt-1">
+			<div className="col-span-2 mt-1 flex justify-start border-t-2 border-gray-100 pt-1">
 				<Button
 					className="flex h-7 w-7 items-center justify-center rounded-md p-1 transition hover:bg-gray-100"
 					onClick={() => openModal("edit", point)}

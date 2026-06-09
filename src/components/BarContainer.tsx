@@ -20,7 +20,7 @@ function BarContainer() {
 
 		if (target.closest("#tooltip")) return;
 
-		const barButton = target.closest("button") as HTMLButtonElement | null;
+		const barButton = target.closest("button");
 
 		if (!barButton) {
 			if (activeBarButtonRef.current !== null) {
@@ -34,18 +34,20 @@ function BarContainer() {
 
 		if (barButton === activeBarButtonRef.current) return;
 
-		const barHeight = barButton.firstElementChild.getBoundingClientRect().height;
+		const bar = barButton.firstElementChild as HTMLDivElement | null;
 
-		activeBarButtonRef.current = barButton;
+		if (!bar) return;
 
-		const innerDiv = barButton.firstElementChild as HTMLDivElement | null;
-		const barId = innerDiv?.dataset.id;
+		const barId = bar.dataset.id;
 		const point = data.points.find((p) => String(p.id) === barId);
 
 		if (!point) return;
 
 		const barButtonRect = barButton.getBoundingClientRect();
 		const containerRect = containerRef.current.getBoundingClientRect();
+		const barHeight = bar.getBoundingClientRect().height;
+
+		activeBarButtonRef.current = barButton;
 
 		const tooltipTop =
 			containerRect.bottom - e.clientY > 100 ?
