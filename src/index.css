@@ -3,3 +3,13 @@
 html {
 	scrollbar-gutter: stable;
 }
+
+.bar__container {
+	height: 80%;
+}
+
+@media (max-height: 800px) {
+	.bar__container {
+		height: 100%;
+	}
+}
