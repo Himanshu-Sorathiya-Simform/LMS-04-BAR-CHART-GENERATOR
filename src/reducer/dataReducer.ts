@@ -38,12 +38,7 @@ function dataReducer(data: Data, action: DataActionState) {
 
 			if (typeof payload !== "string") return data;
 
-			const index = data.points.findIndex((point) => point.id === +payload);
-
-			const newPoints = [
-				...data.points.slice(0, index),
-				...data.points.slice(index + 1),
-			];
+			const newPoints = data.points.filter((point) => point.id === +payload);
 
 			return { ...data, points: newPoints };
 		}
